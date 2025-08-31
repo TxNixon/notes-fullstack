@@ -23,7 +23,7 @@ class User(db.Model):
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
     
-    def to_json(self):
+    def to_json(self, include_note=True):
         data = {
             "username" : self.username,
             "email" : self.email,
@@ -31,4 +31,6 @@ class User(db.Model):
             "thumbnail_img" : self.thumbnail_img,
             "created_at" : self.created_at.isoformat()
         }
+        if include_note:
+            data["notes"] = [note.to_json(include_user=False) for note in self.notes]
         return data

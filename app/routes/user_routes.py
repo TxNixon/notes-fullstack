@@ -19,12 +19,21 @@ def get_user():
 
 @user_bp.route('/', methods=['PUT'])
 @jwt_required()
-def update_user_route():
+def edit_user():
     current_user_id = get_jwt_identity()
-    data = request.json
+    data = request.form.to_dict()
+    #untuk ambil data request
+    profile_image_file = request.files.get('profile_image')
+    thumbnail_img_file = request.files.get('thumbnail_img')
 
-    user, message = update_user(current_user_id, data)
+    #untuk validasi data jika tidak ada data sama sekali
+    if not data and not profile_image_file and not thumbnail_img_file:
+        return error_response("No data provided", 400)
+    
+    #call service update user
+    user, message = update_user(current_user_id, data, profile_image_file, thumbnail_img_file)
 
+    #jika gagal update user
     if not user:
         return error_response(message, 400)
 

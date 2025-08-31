@@ -29,6 +29,6 @@ def add_note():
     if note:
         return jsonify({
             "message": message,
-            "data": note.to_dict()
+            "data": note.to_json()
         }), 201
     return jsonify({"error": message}), 400
