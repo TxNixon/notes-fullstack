@@ -29,15 +29,15 @@ def create_app():
     #daftar routes
     from app.routes.base_routes import base
     from app.routes.auth_routes import register_bp, login_bp
-    from app.routes.note_routes import note_bp
     from app.routes.user_routes import user_bp
     from app.routes.upload_routes import file_bp
+    from app.routes.note_routes import note_bp
 
     app.register_blueprint(base, url_prefix='/')
     app.register_blueprint(register_bp, url_prefix='/api/v1/register')
     app.register_blueprint(login_bp, url_prefix='/api/v1/login')
-    app.register_blueprint(note_bp, url_prefix='/api/v1/notes')
     app.register_blueprint(user_bp, url_prefix='/api/v1/user')
     app.register_blueprint(file_bp, url_prefix='/uploads')
+    app.register_blueprint(note_bp, url_prefix='/api/v1/note')
 
     return app
